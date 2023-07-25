@@ -10,8 +10,8 @@ def user_login(request):
     if request.method == "POST":
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
 
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -19,9 +19,7 @@ def user_login(request):
                 return redirect("list_projects")
     else:
         form = LoginForm()
-    context = {
-        "form": form
-    }
+    context = {"form": form}
     return render(request, "accounts/login.html", context)
 
 
@@ -34,9 +32,9 @@ def signup(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            password_confirmation = form.cleaned_data['password_confirmation']
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            password_confirmation = form.cleaned_data["password_confirmation"]
 
             if password == password_confirmation:
                 user = User.objects.create_user(username, password=password)
@@ -46,7 +44,5 @@ def signup(request):
                 form.add_error("password", "the passwords do not match")
     else:
         form = SignUpForm()
-    context = {
-        "form": form
-    }
+    context = {"form": form}
     return render(request, "registration/signup.html", context)
